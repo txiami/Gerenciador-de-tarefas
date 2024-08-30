@@ -37,9 +37,9 @@ public class TarefasController {
 
     @GetMapping("/{id}")
     public ResponseEntity<TarefaModel> getTarefaById(@PathVariable UUID id) {
-        Optional<TarefaModel> tarefaModel = tarefaService.getTarefaById(id);
-        return tarefaModel.map(ResponseEntity::ok).orElseGet(()
-                -> ResponseEntity.notFound().build());
+        Optional<TarefaModel> tarefaModel = Optional.ofNullable(tarefaService.getTarefaById(id));
+        return tarefaModel.map(ResponseEntity::ok) // Retorna 200 OK se encontrada
+                .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build()); // Retorna 404 Not Found se não encontrada
     }
 
     @PutMapping("/{id}")
@@ -51,11 +51,13 @@ public class TarefasController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Boolean> deleteTarefa(@PathVariable UUID id) {
-        TarefaModel tarefa = tarefaService.deleteTarefa(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Tarefa com ID " + id + " não encontrada."));
-
-        tarefaRepository.delete(tarefa);
-        return true;
+        boolean isDeleted = tarefaService.deleteTarefa(id);
+        if (isDeleted) {
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).build(); // Retorna 204 No Content se deletada
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build(); // Retorna 404 Not Found se não encontrada
+        }
+    }
     }
 
 //    @DeleteMapping("/teste/{id}")
@@ -67,4 +69,4 @@ public class TarefasController {
 //            return ResponseEntity.notFound().build();
 //        }
 //    }
-}
+
