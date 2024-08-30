@@ -59,8 +59,12 @@ Após iniciar a aplicação, você pode testar os endpoints usando ferramentas c
 
 Exemplos de endpoints disponíveis:
 
-GET /tarefas - Retorna todas as tarefas
-GET /tarefas/{id} - Retorna uma tarefa específica por ID
-POST /tarefas - Cria uma nova tarefa
-PUT /tarefas/{id} - Atualiza uma tarefa existente
-DELETE /tarefas/{id} - Deleta uma tarefa existente
+GET http://localhost:8080/tarefas - Retorna todas as tarefas
+
+GET http://localhost:8080/tarefas/{id} - Retorna uma tarefa específica por ID
+
+POST http://localhost:8080/tarefas - Cria uma nova tarefa
+
+PUT http://localhost:8080/tarefas/{id} - Atualiza uma tarefa existente
+
+DELETE http://localhost:8080/tarefas/{id} - Deleta uma tarefa existente
