@@ -1,7 +1,7 @@
 package com.api.gerenciadortarefas.controllers;
 
 
-import Dtos.TarefaDTO;
+import com.api.gerenciadortarefas.Dtos.TarefaDTO;
 import com.api.gerenciadortarefas.models.TarefaModel;
 import com.api.gerenciadortarefas.services.TarefaService;
 import jakarta.validation.Valid;
@@ -15,20 +15,20 @@ import java.util.Optional;
 import java.util.UUID;
 
 @RestController
-
+@RequestMapping("/tarefas")
 public class TarefasController {
 
     @Autowired
     private TarefaService tarefaService;
 
     // Criar uma nova tarefa
-    @PostMapping("/tarefas")
+    @PostMapping()
     public ResponseEntity<TarefaModel> createTarefa(@RequestBody @Valid TarefaDTO tarefaDTO) {
         TarefaModel tarefaModel = tarefaService.createTarefa(tarefaDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(tarefaModel);
     }
 
-    @GetMapping("/tarefas")
+    @GetMapping()
     public ResponseEntity<List<TarefaModel>> getAllTarefas() {
         List<TarefaModel> tarefas = tarefaService.getAllTarefas();
         return ResponseEntity.ok(tarefas);
@@ -38,8 +38,8 @@ public class TarefasController {
     @GetMapping("/{id}")
     public ResponseEntity<TarefaModel> getTarefaById(@PathVariable UUID id) {
         Optional<TarefaModel> tarefaModel = Optional.ofNullable(tarefaService.getTarefaById(id));
-        return tarefaModel.map(ResponseEntity::ok) // Retorna 200 OK se encontrada
-                .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build()); // Retorna 404 Not Found se não encontrada
+        return tarefaModel.map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
     }
 
     @PutMapping("/{id}")
@@ -53,20 +53,9 @@ public class TarefasController {
     public ResponseEntity<Boolean> deleteTarefa(@PathVariable UUID id) {
         boolean isDeleted = tarefaService.deleteTarefa(id);
         if (isDeleted) {
-            return ResponseEntity.status(HttpStatus.NO_CONTENT).build(); // Retorna 204 No Content se deletada
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
         } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build(); // Retorna 404 Not Found se não encontrada
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
     }
     }
-
-//    @DeleteMapping("/teste/{id}")
-//    public ResponseEntity<Void> deleteTarefa(@PathVariable UUID id) {
-//        boolean isDeleted = tarefaService.deleteTarefa(id);
-//        if (isDeleted) {
-//            return ResponseEntity.noContent().build();
-//        } else {
-//            return ResponseEntity.notFound().build();
-//        }
-//    }
-

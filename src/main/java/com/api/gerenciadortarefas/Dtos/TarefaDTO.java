@@ -1,4 +1,4 @@
-package Dtos;
+package com.api.gerenciadortarefas.Dtos;
 
 import jakarta.validation.constraints.NotBlank;
 
