@@ -65,6 +65,19 @@ GET http://localhost:8080/tarefas/{id} - Retorna uma tarefa específica por ID
 
 POST http://localhost:8080/tarefas - Cria uma nova tarefa
 
+```bash
+{
+    "titulo": "teste",
+    "descricao": "teste"
+}
+```
+
 PUT http://localhost:8080/tarefas/{id} - Atualiza uma tarefa existente
 
+```bash
+{
+    "titulo": "teste",
+    "descricao": "teste"
+}
+```
 DELETE http://localhost:8080/tarefas/{id} - Deleta uma tarefa existente
